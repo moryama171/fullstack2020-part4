@@ -6,17 +6,23 @@ const totalLikes = (blogs) => {
       .reduce((totalLikes, likes) => totalLikes + likes);
 };
 
-// const average = (array) => {
-//   const reducer = (sum, item) => {
-//     return sum + item;
-//   };
+const favoriteBlog = (blogs) => {
 
-//   return array.length === 0
-//     ? 0
-//     : array.reduce(reducer, 0) / array.length;
-// };
+  if (blogs.length === 0) {
+    return undefined;
+  }
 
+  const listOfLikes = blogs.map(blog => blog.likes);
+  const highestLike = Math.max(...listOfLikes);
+  const mostLikedBlog = blogs[listOfLikes.indexOf(highestLike)];
+  return {
+    'title': mostLikedBlog.title,
+    'author': mostLikedBlog.author,
+    'likes': mostLikedBlog.likes
+  };
+};
 
 module.exports = {
-  totalLikes
+  totalLikes,
+  favoriteBlog
 };
