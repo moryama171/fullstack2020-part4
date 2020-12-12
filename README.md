@@ -11,6 +11,7 @@ Check out the application. [COMING SOON]
 ## Learning focus
 
 - project structure best practices
+- **Jest** library for unit testing
 
 ## Notes
 
@@ -23,6 +24,8 @@ Uses Node.js v12.18.3 with Express.
 Javascript follows ES6 specifications.
 
 Database is a MongoDB managed with Mongoose.
+
+Tested with Jest.
 
 ## Usage
 

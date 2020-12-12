@@ -13,8 +13,11 @@ const favoriteBlog = (blogs) => {
   }
 
   const listOfLikes = blogs.map(blog => blog.likes);
-  const highestLike = Math.max(...listOfLikes);
-  const mostLikedBlog = blogs[listOfLikes.indexOf(highestLike)];
+  const mostLikedBlog = blogs[
+    listOfLikes.indexOf(
+      Math.max(...listOfLikes)
+    )
+  ];
   return {
     'title': mostLikedBlog.title,
     'author': mostLikedBlog.author,
