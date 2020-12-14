@@ -51,11 +51,13 @@ describe('blogs api', () => {
     const titles = blogsAtEnd.map(b => b.title);
     expect(titles).toContain(helper.newBlog.title);
     done();
+  });
 
-    // test('default likes property to 0 when missing', async (done) => {
-    //   // Get
-    // });
+  test('default likes property to 0 when missing', async (done) => {
+    const response = await api.get('/api/blogs');
 
+    response.body.map(blog => expect(blog.likes).toBeDefined());
+    done();
   });
 
 });

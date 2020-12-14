@@ -4,6 +4,11 @@ const Blog = require('../models/blog');
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({});
+  blogs.forEach(blog => {
+    if (!blog.likes) {
+      blog.likes = 0;
+    }
+  });
   response.json(blogs);
 });
 
