@@ -29,6 +29,14 @@ describe('blogs api', () => {
     done();
   });
 
+  test('the unique identifier of a blog post is named "id"', async (done) => {
+    const response = await api.get('/api/blogs');
+
+    const ids = response.body.map(blog => blog.id);
+    ids.map(id => expect(id).toBeDefined());
+    done();
+  });
+
 });
 
 afterAll(() => {
