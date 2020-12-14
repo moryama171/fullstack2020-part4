@@ -11,11 +11,14 @@ Check out the application. [COMING SOON]
 ## Learning focus
 
 - project structure best practices
-- **Jest** library for unit testing
+- **Jest** library for unit testing Node
+- `supertest` library to test API endpoints
+- setup and teardown functions
+- `async`/`await` syntax
 
 ## Notes
 
--
+- Jest isn't probably the ideal tool for testing Node applications, but it will do for now
 
 ## Stack
 
