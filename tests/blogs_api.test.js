@@ -13,8 +13,7 @@ beforeEach(async () => {
   await Promise.all(promiseArray);
 });
 
-describe('blogs api', () => {
-
+describe('when there are some blogs saved', () => {
   test('blogs are returned as json', async (done) => {
     await api
       .get('/api/blogs')
@@ -38,6 +37,16 @@ describe('blogs api', () => {
     done();
   });
 
+  test('default "likes" property to 0 when missing', async (done) => {
+    const response = await api.get('/api/blogs');
+
+    response.body.map(blog => expect(blog.likes).toBeDefined());
+    done();
+  });
+
+});
+
+describe('addition of a new blog', () => {
   test('a new blog can be added', async (done) => {
     await api
       .post('/api/blogs')
@@ -53,13 +62,6 @@ describe('blogs api', () => {
     done();
   });
 
-  test('default "likes" property to 0 when missing', async (done) => {
-    const response = await api.get('/api/blogs');
-
-    response.body.map(blog => expect(blog.likes).toBeDefined());
-    done();
-  });
-
   test('returns 400 when adding blog without "title" and "url"', async (done) => {
     const incompleteBlog = {
       author: 'Hoffmann',
@@ -71,6 +73,24 @@ describe('blogs api', () => {
       .send(incompleteBlog)
       .expect(400);
     done();
+  });
+
+});
+
+describe('deletion of a blog', () => {
+  test('succeeds with status code 204 if id is valid', async () => {
+    const blogsBeforeDeletion = await helper.blogsInDb();
+    const blogToDelete = blogsBeforeDeletion[0];
+
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(204);
+
+    const blogsAfterDeletion = await helper.blogsInDb();
+    expect(blogsAfterDeletion).toHaveLength(blogsBeforeDeletion.length - 1);
+
+    const titles = blogsAfterDeletion.map(blog => blog.title);
+    expect(titles).not.toContain(blogToDelete.title);
   });
 
 });
