@@ -53,10 +53,23 @@ describe('blogs api', () => {
     done();
   });
 
-  test('default likes property to 0 when missing', async (done) => {
+  test('default "likes" property to 0 when missing', async (done) => {
     const response = await api.get('/api/blogs');
 
     response.body.map(blog => expect(blog.likes).toBeDefined());
+    done();
+  });
+
+  test('returns 400 when adding blog without "title" and "url"', async (done) => {
+    const incompleteBlog = {
+      author: 'Hoffmann',
+      likes: 24
+    };
+
+    await api
+      .post('/api/blogs')
+      .send(incompleteBlog)
+      .expect(400);
     done();
   });
 
