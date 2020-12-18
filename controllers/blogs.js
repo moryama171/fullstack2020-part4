@@ -66,20 +66,27 @@ blogsRouter.put('/:id', async (request, response) => {
 });
 
 blogsRouter.delete('/:id', async (request, response) => {
-  // const decodedToken = jwt.verify(request.token, process.env.SECRET);
-  // if (!decodedToken.id) {
-  //   return response.status(401).json({error: 'token missing or invalid'});
-  // }
-  // const user = await User.findById(decodedToken.id);
-  // if (!user) {
-  //   return response.status(401).json({error: 'invalid user'});
-  // }
+  const token = getTokenFrom(request);
+  const decodedToken = jwt.verify(token, process.env.SECRET);
+  if (!token || !decodedToken.id) {
+    return response.status(401).json({error: 'token missing or invalid'});
+  }
+  const user = await User.findById(decodedToken.id);
+  if (!user) {
+    return response.status(401).json({error: 'invalid user'});
+  }
 
-  // const blogToRemove = Blog.findById(request.params.id)
+  const blogToRemove = await Blog.findById(request.params.id);
+  
+  // TODO: TEST + Prevent deleting unexisting blog
 
+  if (!(blogToRemove.user.toString() === user._id.toString())) {
+    return response.status(403).json({error: 'user not authorised'});
+  }
 
-  await Blog.findByIdAndRemove(request.params.id);
+  await blogToRemove.remove();
   response.status(204).end();
+
 });
 
 module.exports = blogsRouter;
