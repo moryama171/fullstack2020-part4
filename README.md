@@ -15,6 +15,9 @@ Check out the application. [COMING SOON]
 - `supertest` library to test API endpoints
 - setup and teardown functions
 - `async`/`await` syntax
+- join MongoDB collections
+- user administration
+- token authentication
 
 ## Notes
 
