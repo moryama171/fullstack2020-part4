@@ -3,3 +3,5 @@ node_modules/
 requests/
 .vscode/
 coverage/
+.eslintrc.js
+.eslintignore
