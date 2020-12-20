@@ -2,9 +2,9 @@
 
 This is my submission for the Full Stack Open [Course](https://fullstackopen.com/en) 2020, part 4.
 
-This is the server for a blog list web application. 
+This is the server for a blog list web application. Check out the [front end](https://github.com/moryama171/fullstack2020/tree/master/part5).
 
-The application will allow users to save information about interesting blogs they have stumbled across on the internet.
+The application allows users to save information about interesting blogs they have stumbled across on the internet.
 
 Check out the application. [COMING SOON]
 
@@ -26,8 +26,6 @@ Check out the application. [COMING SOON]
 ## Stack
 
 Uses Node.js v12.18.3 with Express.
-
-Javascript follows ES6 specifications.
 
 Database is a MongoDB managed with Mongoose.
 
