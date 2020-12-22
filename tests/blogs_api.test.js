@@ -159,6 +159,15 @@ describe('deletion of a blog', () => {
     expect(titles).not.toContain(blogToDelete.title);
   });
 
+  test('fails with status code 400 when blog is non-existing', async () => {
+    const nonExistingId = await helper.nonExistingBlogId();
+
+    await api
+      .delete(`/api/blogs/${nonExistingId}`)
+      .set('Authorization', authHeader)
+      .expect(400);
+  });
+
 });
 
 afterAll(() => {

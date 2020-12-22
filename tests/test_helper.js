@@ -41,12 +41,12 @@ const blogsInDb = async () => {
 
 const initialUsers = [
   {
-    username: 'bubba', 
+    username: 'bubba',
     password: 'bubba',
     name: 'Bubbola de Bubbis'
   },
   {
-    username: 'cucca', 
+    username: 'cucca',
     password: 'cucca',
     name: 'Cuccola de Cucchis'
   }
@@ -57,9 +57,17 @@ const usersInDb = async () => {
   return users.map(user => user.toJSON());
 };
 
+const nonExistingBlogId = async () => {
+  const tempBlog = new Blog({title: 'removingsoon', 'url': 'some url'});
+  await tempBlog.save()
+  await tempBlog.remove()
+  return tempBlog._id.toString()
+};
+
 module.exports = {
   blogsInDb,
   initialBlogs,
   initialUsers,
+  nonExistingBlogId,
   usersInDb
 };

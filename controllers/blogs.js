@@ -7,7 +7,7 @@ const User = require('../models/user');
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog
     .find({})
-    .populate('user', {username: 1});
+    .populate('user', { username: 1 });
   blogs.forEach(blog => {
     if (!blog.likes) {
       blog.likes = 0;
@@ -28,18 +28,18 @@ const getTokenFrom = (request) => {
 
 blogsRouter.post('/', async (request, response) => {
   const body = request.body;
-  
+
   const token = getTokenFrom(request);
   if (!token) {
-    return response.status(401).json({error: 'token missing'});
+    return response.status(401).json({ error: 'token missing' });
   }
   const decodedToken = jwt.verify(token, process.env.SECRET);
   if (!decodedToken.id) {
-    return response.status(401).json({error: 'token invalid'});
+    return response.status(401).json({ error: 'token invalid' });
   }
   const user = await User.findById(decodedToken.id);
   if (!user) {
-    return response.status(401).json({error: 'invalid user'});
+    return response.status(401).json({ error: 'invalid user' });
   }
 
   const blog = new Blog({
@@ -72,19 +72,21 @@ blogsRouter.delete('/:id', async (request, response) => {
   const token = getTokenFrom(request);
   const decodedToken = jwt.verify(token, process.env.SECRET);
   if (!token || !decodedToken.id) {
-    return response.status(401).json({error: 'token missing or invalid'});
+    return response.status(401).json({ error: 'token missing or invalid' });
   }
   const user = await User.findById(decodedToken.id);
   if (!user) {
-    return response.status(401).json({error: 'invalid user'});
+    return response.status(401).json({ error: 'invalid user' });
   }
 
   const blogToRemove = await Blog.findById(request.params.id);
-  
-  // TODO: TEST + Prevent deleting unexisting blog
+
+  if (!blogToRemove) {
+    return response.status(400).json({ error: 'requested item was already deleted' });
+  }
 
   if (!(blogToRemove.user.toString() === user._id.toString())) {
-    return response.status(403).json({error: 'user not authorised'});
+    return response.status(403).json({ error: 'user not authorised' });
   }
 
   await blogToRemove.remove();
