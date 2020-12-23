@@ -2,7 +2,7 @@
 
 This is my submission for the Full Stack Open [Course](https://fullstackopen.com/en) 2020, part 4.
 
-This is the server for a blog list web application. Check out the [front end](https://github.com/moryama171/fullstack2020/tree/master/part5).
+This is the server for a blog list web application. Check out the [front end](XXXXXX).
 
 The application allows users to save information about interesting blogs they have stumbled across on the internet.
 
